@@ -1,0 +1,41 @@
+import { helpPosts, events, programs } from '../data/seed';
+
+function enforceRole(role) {
+  if (!['SUPER_ADMIN', 'VOLUNTEER_MOD'].includes(role)) {
+    throw new Error('Unauthorized');
+  }
+}
+
+export function approve(entityType, id, role) {
+  enforceRole(role);
+  const collection = getCollection(entityType);
+  const item = collection.find((i) => (i.helpId ?? i.eventId ?? i.programId) === id);
+  if (item) item.moderationStatus = 'APPROVED';
+  return item;
+}
+
+export function reject(entityType, id, role) {
+  enforceRole(role);
+  const collection = getCollection(entityType);
+  const item = collection.find((i) => (i.helpId ?? i.eventId ?? i.programId) === id);
+  if (item) item.moderationStatus = 'REJECTED';
+  return item;
+}
+
+export function rateLimit(userId) {
+  // Placeholder for rate limiting implementation.
+  return { allowed: true };
+}
+
+function getCollection(entityType) {
+  switch (entityType) {
+    case 'HELP':
+      return helpPosts;
+    case 'EVENT':
+      return events;
+    case 'PROGRAM':
+      return programs;
+    default:
+      throw new Error('Unsupported entity type');
+  }
+}

@@ -1,0 +1,26 @@
+import { partners, clickLogs } from '../data/seed';
+
+export function buildAffiliateJobSearchLinks(keyword, location, remoteFlag = false) {
+  return partners
+    .filter((p) => p.isActive)
+    .map((partner) => {
+      const outboundUrl = partner.baseTrackingUrl
+        .replace('{keyword}', encodeURIComponent(keyword))
+        .replace('{location}', encodeURIComponent(remoteFlag ? 'Remote' : location));
+      return { partnerId: partner.partnerId, name: partner.name, outboundUrl };
+    });
+}
+
+export function logClick(userId, partnerId, entityType, entityId, outboundUrl) {
+  const click = {
+    clickId: `click-${Date.now()}`,
+    userId,
+    partnerId,
+    entityType,
+    entityId,
+    outboundUrl,
+    timestamp: new Date().toISOString()
+  };
+  clickLogs.push(click);
+  return click;
+}

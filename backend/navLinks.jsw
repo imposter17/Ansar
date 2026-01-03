@@ -1,0 +1,8 @@
+export function getGoogleMapsLink(lat, lng, name, address) {
+  const query = encodeURIComponent(`${name ?? ''} ${address ?? ''}`.trim() || `${lat},${lng}`);
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${query}`;
+}
+
+export function getWazeLink(lat, lng) {
+  return `https://waze.com/ul?ll=${lat}%2C${lng}&navigate=yes`;
+}

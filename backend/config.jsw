@@ -1,0 +1,7 @@
+// Secure config storage for Velo backend
+// Values are placeholders; replace with Secrets Manager keys in production.
+export const config = {
+  googleApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  translateApiKey: process.env.TRANSLATE_API_KEY,
+  openAiKey: process.env.OPENAI_API_KEY
+};
