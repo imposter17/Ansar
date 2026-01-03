@@ -1,0 +1,64 @@
+// Velo backend module for Google Maps search + caching.
+import { config } from './config.jsw';
+import { places } from '../data/seed';
+
+const CACHE_TTL_MS = 1000 * 60 * 60; // 1 hour
+const cache = new Map();
+
+function upsertPlace(placePayload) {
+  const existingIndex = places.findIndex((p) => p.placeId === placePayload.placeId);
+  if (existingIndex >= 0) {
+    places[existingIndex] = { ...places[existingIndex], ...placePayload, updatedAt: new Date().toISOString() };
+  } else {
+    places.push({ ...placePayload, updatedAt: new Date().toISOString() });
+  }
+}
+
+function cacheKey(key) {
+  return `${key}`;
+}
+
+export async function searchPlaces(query, lat, lng, radiusMeters, types = []) {
+  const key = cacheKey(`${query}-${lat}-${lng}-${radiusMeters}-${types.join(',')}`);
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return cached.data;
+  }
+
+  // In production, call Google Places Nearby Search API using fetch with config.googleApiKey.
+  // Here we simulate with seeded data + filtering.
+  const results = places.filter((p) => (!types.length || types.includes(p.type)) && p.name.toLowerCase().includes(query.toLowerCase()));
+  cache.set(key, { timestamp: Date.now(), data: results });
+  results.forEach((place) => upsertPlace(place));
+  return results;
+}
+
+export async function autocomplete(query) {
+  const key = cacheKey(`ac-${query}`);
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) return cached.data;
+  const matches = places.filter((p) => p.name.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
+  cache.set(key, { timestamp: Date.now(), data: matches });
+  return matches;
+}
+
+export async function getPlaceDetails(placeId) {
+  const key = cacheKey(`details-${placeId}`);
+  const cached = cache.get(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) return cached.data;
+  const place = places.find((p) => p.placeId === placeId);
+  if (!place) return null;
+  cache.set(key, { timestamp: Date.now(), data: place });
+  return place;
+}
+
+export async function searchViewport(bounds, filters = {}) {
+  // bounds: { north, south, east, west }
+  const results = places.filter((p) => {
+    const inBounds = p.lat < bounds.north && p.lat > bounds.south && p.lng < bounds.east && p.lng > bounds.west;
+    const typeOk = filters.type ? p.type === filters.type : true;
+    const verifiedOk = filters.verified ? p.verifiedStatus !== 'UNVERIFIED' : true;
+    return inBounds && typeOk && verifiedOk;
+  });
+  return results;
+}
