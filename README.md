@@ -1,51 +1,123 @@
-# Ansar — Futuristic Muslim Discovery & Community Platform
+# Masjid Help Board (Base44-ready)
 
-Ansar is a production-ready, premium dark-mode web experience for nationwide Muslim discovery. It unifies Google Maps-powered place search, community submissions, claim flows for mosques and MSAs, programs/events, a help board, and affiliate job searches with outbound tracking.
+A production-oriented full-stack app that digitizes the masjid help board and monetizes outbound affiliate discovery.
 
-## Features
+## Tech stack
 
-- **Glassmorphism UI** with neon gradients, skeleton loaders, clustering map pins, and mobile tab navigation.
-- **Discovery directories** for Mosques, Halal Food, Groups/MSAs, Programs/Education, Help Board, Jobs (affiliate), and detailed profiles for mosques, universities, groups, and programs.
-- **Navigation everywhere** with Google Maps + Waze deep links on every location card/profile.
-- **Search and filters** for query, category, verified status, and “open now”/distance placeholders.
-- **Verification & claims** including mosque and MSA claim buttons, admin moderation, and report flows.
-- **Accessibility** defaults to dark mode, AA contrast-ready styles, keyboard focus states, and font scaling support.
-- **Admin dashboard** for moderation queues, analytics, roles, and partner status.
+- Next.js 14 + React 18 + TypeScript + Tailwind
+- Base44 backend (`base44/entities`, `base44/functions`)
+- `@base44/sdk` client integration for auth, CRUD, and functions
 
-## Getting started
+## Full folder structure
 
-1. Install dependencies: `npm install` (requires access to npm registry).  
-2. Run development server: `npm run dev` then open http://localhost:3000.  
-3. Add a Google Maps key: set `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` in `.env.local` for the live map; without it, the app shows a skeleton placeholder.
+```text
+.
+├── app/
+│   ├── admin/page.tsx
+│   ├── api/redirect/route.ts
+│   ├── api/translate/route.ts
+│   ├── create/page.tsx
+│   ├── dashboard/page.tsx
+│   ├── favorites/page.tsx
+│   ├── login/page.tsx
+│   ├── page.tsx
+│   ├── reports/page.tsx
+│   ├── search/page.tsx
+│   ├── signup/page.tsx
+│   └── layout.tsx
+├── base44/
+│   ├── .app.jsonc
+│   ├── config.jsonc
+│   ├── entities/
+│   │   ├── affiliate_clicks.json
+│   │   ├── commissions.json
+│   │   ├── messages.json
+│   │   ├── posts.json
+│   │   ├── reports.json
+│   │   └── users.json
+│   └── functions/
+│       ├── auto-translate.ts
+│       ├── calculate-commission.ts
+│       ├── create-post.ts
+│       ├── find-matches.ts
+│       ├── mark-solved.ts
+│       ├── track-affiliate-redirect.ts
+│       └── update-post.ts
+├── components/
+│   ├── board/LanguageSelect.tsx
+│   ├── board/PostCard.tsx
+│   └── providers/I18nProvider.tsx
+└── lib/base44.ts
+```
 
-## Site map (App Router)
+## Features delivered
 
-- `/` — onboarding + directory shortcuts  
-- `/map` — explore map with filters and clustered pins  
-- `/mosques`, `/food`, `/groups`, `/programs`, `/help`, `/jobs` — category directories  
-- `/place/[id]`, `/mosque/[id]`, `/university/[id]`, `/group/[id]`, `/program/[id]` — detail profiles with navigation buttons  
-- `/me` — user profile and preferences  
-- `/admin` — role-protected admin dashboard
+1. User posts with category, location, optional budget, and status lifecycle.
+2. Affiliate redirect tracking for Indeed/Glassdoor/ZipRecruiter/Zillow/Airbnb/Realtor.
+3. Multi-language UI and post translation-ready structure.
+4. Matching system (internal + external suggestions).
+5. Auth-ready login/signup pages + user dashboard.
+6. Admin panel with moderation and analytics cards.
+7. Commission tracking entities and calculation function.
+8. Optional notifications section in user dashboard.
+9. Save/favorite and report content pages.
 
-## Data & backend modules
+## Base44 backend
 
-Seed data in `/data/seed.ts` mirrors the Wix Data Collections: UsersPublic, Places, Mosques, Universities, GroupsMSA, Programs, Events, HelpPosts, AffiliatePartners, ClickLogs, and Reports.
+### Entities
 
-Velo-style backend stubs live in `/backend`:
+- `users` (extends auth users with role, preferred language, reward points)
+- `posts`
+- `affiliate_clicks`
+- `commissions`
+- `reports`
+- `messages`
 
-- `config.jsw` — API key holder (Google Maps/Places, optional Translate/OpenAI)
-- `maps.jsw` — search, autocomplete, viewport search, and caching/upsert to Places
-- `navLinks.jsw` — Google Maps + Waze deep links
-- `jobs.jsw` — affiliate job search link builder + click logging
-- `moderation.jsw` — approve/reject helpers and role enforcement placeholders
+### Functions
 
-API routes under `/app/api` expose search, click logging, and place details for the Next.js front end.
+- `create-post`
+- `update-post`
+- `mark-solved`
+- `track-affiliate-redirect`
+- `calculate-commission`
+- `find-matches`
+- `auto-translate`
 
-## Deployment checklist
+## Local setup
 
-- Configure environment secrets (Google Maps/Places, optional Translate/OpenAI keys).  
-- Point `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` to a client-safe key with HTTP referrer restrictions.  
-- Enable HTTPS, CSP, and rate limits on write routes (claims, help posts, reports).  
-- Connect to production data sources or Wix Data collections; replace seed data with real persistence.  
-- Verify affiliate partner terms for outbound job links and ensure click tracking storage.  
-- Run `npm run build` and deploy on a platform that supports Next.js App Router.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Add environment variables in `.env.local`:
+   ```bash
+   NEXT_PUBLIC_BASE44_APP_ID=masjid-help-board
+   NEXT_PUBLIC_BASE44_PUBLIC_KEY=your_public_key
+   ```
+3. Run dev server:
+   ```bash
+   npm run dev
+   ```
+
+## Base44 CLI workflow
+
+1. Create/link app:
+   ```bash
+   base44 create
+   ```
+2. Push entities:
+   ```bash
+   base44 entities push --config base44/config.jsonc
+   ```
+3. Deploy functions + app:
+   ```bash
+   base44 deploy --config base44/config.jsonc
+   ```
+
+## Production deployment checklist
+
+- Replace demo `appId` in `base44/.app.jsonc` with real app id.
+- Configure Base44 auth providers and role policy.
+- Add webhook to send conversion callbacks into `calculate-commission`.
+- Add translation provider in `auto-translate.ts`.
+- Enforce rate limits + moderation automation for abuse handling.

@@ -1,0 +1,17 @@
+{
+  "name": "posts",
+  "fields": {
+    "title": { "type": "string", "required": true, "minLength": 5, "maxLength": 120 },
+    "description": { "type": "string", "required": true, "minLength": 20, "maxLength": 3000 },
+    "category": { "type": "enum", "values": ["job", "housing", "roommate", "service", "general"], "required": true },
+    "location": { "type": "string", "required": true },
+    "budget": { "type": "number", "required": false },
+    "status": { "type": "enum", "values": ["active", "in_progress", "solved"], "default": "active" },
+    "language": { "type": "string", "default": "en" },
+    "translations": { "type": "json", "required": false },
+    "createdBy": { "type": "relation", "entity": "users", "required": true },
+    "savedBy": { "type": "relation[]", "entity": "users", "required": false },
+    "reportsCount": { "type": "number", "default": 0 }
+  },
+  "indexes": ["category", "status", "location", "createdBy"]
+}

@@ -1,0 +1,6 @@
+{
+  "runtime": "deno",
+  "functionsDir": "functions",
+  "entitiesDir": "entities",
+  "region": "us-east-1"
+}

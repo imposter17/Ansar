@@ -1,0 +1,13 @@
+{
+  "name": "affiliate_clicks",
+  "fields": {
+    "postId": { "type": "relation", "entity": "posts", "required": true },
+    "userId": { "type": "relation", "entity": "users", "required": false },
+    "network": { "type": "enum", "values": ["indeed", "glassdoor", "ziprecruiter", "zillow", "airbnb", "realtor"], "required": true },
+    "targetUrl": { "type": "string", "required": true },
+    "conversionStatus": { "type": "enum", "values": ["clicked", "converted", "rejected"], "default": "clicked" },
+    "commissionRate": { "type": "number", "required": true },
+    "commissionAmount": { "type": "number", "default": 0 }
+  },
+  "indexes": ["network", "conversionStatus", "postId", "userId"]
+}
