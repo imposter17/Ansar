@@ -1,14 +1,17 @@
 {
-  "name": "ansar",
+  "name": "masjid-help-board",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "base44:push": "base44 entities push --config base44/config.jsonc",
+    "base44:deploy": "base44 deploy --config base44/config.jsonc"
   },
   "dependencies": {
+    "@base44/sdk": "^0.2.0",
     "@react-google-maps/api": "2.19.1",
     "clsx": "2.1.1",
     "framer-motion": "11.0.17",

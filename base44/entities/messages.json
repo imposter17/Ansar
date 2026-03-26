@@ -1,0 +1,11 @@
+{
+  "name": "messages",
+  "fields": {
+    "postId": { "type": "relation", "entity": "posts", "required": true },
+    "senderId": { "type": "relation", "entity": "users", "required": true },
+    "recipientId": { "type": "relation", "entity": "users", "required": true },
+    "body": { "type": "string", "required": true, "maxLength": 2000 },
+    "isRead": { "type": "boolean", "default": false }
+  },
+  "indexes": ["postId", "senderId", "recipientId"]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "users",
+  "extends": "auth.users",
+  "fields": {
+    "displayName": { "type": "string", "required": true, "minLength": 2 },
+    "role": { "type": "enum", "values": ["user", "admin"], "default": "user" },
+    "preferredLanguage": { "type": "string", "default": "en" },
+    "rewardPoints": { "type": "number", "default": 0 }
+  },
+  "indexes": ["role", "preferredLanguage"]
+}

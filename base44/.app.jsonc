@@ -1,0 +1,6 @@
+{
+  // Replace with your real Base44 app id after `base44 create`
+  "appId": "masjid-help-board",
+  "name": "Masjid Help Board",
+  "environment": "production"
+}

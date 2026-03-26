@@ -1,0 +1,10 @@
+{
+  "name": "reports",
+  "fields": {
+    "postId": { "type": "relation", "entity": "posts", "required": true },
+    "reporterId": { "type": "relation", "entity": "users", "required": true },
+    "reason": { "type": "string", "required": true, "maxLength": 500 },
+    "status": { "type": "enum", "values": ["open", "resolved"], "default": "open" }
+  },
+  "indexes": ["postId", "reporterId", "status"]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "commissions",
+  "fields": {
+    "userId": { "type": "relation", "entity": "users", "required": true },
+    "platform": { "type": "string", "required": true },
+    "clickCount": { "type": "number", "default": 0 },
+    "conversionCount": { "type": "number", "default": 0 },
+    "grossRevenue": { "type": "number", "default": 0 },
+    "userReward": { "type": "number", "default": 0 }
+  },
+  "indexes": ["userId", "platform"]
+}
