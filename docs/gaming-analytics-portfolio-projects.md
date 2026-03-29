@@ -423,3 +423,177 @@ Analyzed game sales drivers across genre, pricing, and discount behavior; delive
 ## Final Note
 
 If you want, next step I can generate the **actual starter files** (`README`, SQL scripts, and notebook scaffolds) for all 3 project folders so you can push to GitHub immediately.
+
+---
+
+# Base44 Copy-Paste Pack (Ready to Use)
+
+Use the following prompts directly in Base44 (or similar AI app builders). Each one is intentionally written as a single copyable block.
+
+## 1) Base44 Prompt — Fortnite Revenue Trends App
+
+```text
+Build a clean analytics web app called "Fortnite Revenue Trends Analyzer".
+
+Goal:
+Analyze Fortnite revenue trends and explain what drives growth or decline.
+
+Data:
+Use a CSV file with columns:
+- date
+- platform (PC, Console, Mobile)
+- region (NA, EU, APAC, LATAM)
+- transactions
+- avg_purchase_value
+- revenue
+- event_flag (0 or 1)
+
+Features:
+1) Upload CSV
+2) Auto-validate schema and show errors if columns are missing
+3) KPI cards:
+   - Total Revenue
+   - MoM Growth %
+   - YoY Growth %
+   - Event Lift %
+4) Visuals:
+   - Monthly revenue line chart
+   - Platform revenue share bar chart
+   - Heatmap by month/year
+   - Event vs non-event revenue comparison
+5) Filters:
+   - Date range
+   - Platform
+   - Region
+6) Insight panel:
+   - Auto-generate 5 business insights in plain English
+7) Export:
+   - Export dashboard summary to PDF
+   - Export cleaned data to CSV
+
+Design:
+- Professional dark/light theme toggle
+- Executive dashboard layout
+- Mobile responsive
+
+Output requirements:
+- Show a "Resume Bullet Suggestions" section with 3 bullets based on selected filters and KPI outcomes.
+```
+
+## 2) Base44 Prompt — Roblox User Growth Dashboard App
+
+```text
+Build a dashboard app named "Roblox Growth Quality Dashboard".
+
+Goal:
+Track Roblox growth quality, not vanity metrics.
+
+Data:
+Use CSV columns:
+- date
+- user_id
+- country
+- device_type
+- session_count
+- minutes_played
+- robux_spend
+- signup_date
+
+Computed metrics:
+- DAU
+- MAU
+- DAU/MAU stickiness ratio
+- Avg session minutes per active user
+- New users by month
+- M1, M2, M3 retention cohorts
+- ARPDAU
+
+Features:
+1) Upload CSV and auto-parse dates
+2) KPI cards for DAU, MAU, stickiness, M1 retention, ARPDAU
+3) Charts:
+   - DAU trend
+   - MAU trend
+   - Stickiness trend
+   - Cohort heatmap
+   - Device and country segment comparison
+4) Cohort tab:
+   - Signup month cohorts
+   - Retention matrix and retention curve
+5) Insight generator:
+   - Highlight strongest segment
+   - Highlight weakest segment
+   - Recommend 3 product actions
+6) Export:
+   - PDF report with all KPIs and top insights
+
+Design:
+- Product analytics style
+- Clear labels for non-technical stakeholders
+- Fast loading and simple navigation
+
+Output requirements:
+- Include a section named "Interview Talking Points" with a 30-second summary.
+```
+
+## 3) Base44 Prompt — Steam Game Sales Analysis App
+
+```text
+Create an analytics app called "Steam Sales Intelligence".
+
+Goal:
+Analyze what drives Steam game revenue across genre, pricing, discounting, and reviews.
+
+Data:
+CSV columns:
+- game_id
+- title
+- release_date
+- genre
+- price
+- discount_pct
+- estimated_units_sold
+- gross_revenue
+- review_score
+- review_count
+
+Features:
+1) Upload CSV and run data quality checks
+2) KPI cards:
+   - Total Revenue
+   - Units Sold
+   - Avg Selling Price
+   - Discounted Revenue Share
+3) Charts:
+   - Genre revenue ranking
+   - Price vs units scatter (bubble by review_count)
+   - Discounted vs non-discounted revenue chart
+   - Monthly release revenue trend
+   - Revenue distribution by genre
+4) Filters:
+   - Genre
+   - Release year
+   - Discount bucket
+5) Insight engine:
+   - Detect top revenue drivers
+   - Detect over-discounting risk
+   - Show genre concentration risk
+6) Export:
+   - Download executive summary PDF
+   - Download insights as text
+
+Design:
+- Business dashboard look
+- Strong readability for recruiters and hiring managers
+
+Output requirements:
+- Add a section called "Resume-Ready Achievements" with 3 quantified bullets.
+```
+
+## Base44 Upload Notes
+
+- Keep each project in a separate Base44 app.
+- Use the same KPI names as in this document for consistency on your résumé.
+- After generating each app, take screenshots and include them in your GitHub project `README.md`.
+- Export one PDF per project and one combined portfolio PDF.
+
